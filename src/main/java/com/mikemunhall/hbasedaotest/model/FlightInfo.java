@@ -1,9 +1,9 @@
 package com.mikemunhall.hbasedaotest.model;
 
-import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import com.mikemunhall.hbasedaotest.util.ConstantPropertyNamingStrategy;
 
-@JsonNaming(PropertyNamingStrategy.LowerCaseStrategy.class)
+@JsonNaming(ConstantPropertyNamingStrategy.class)
 public class FlightInfo {
 
     private String ID;
