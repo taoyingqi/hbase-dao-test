@@ -1,7 +1,7 @@
-package com.mikemunhall.hbasedaotest.service;
+package com.mikemunhall.service;
 
-import com.mikemunhall.hbasedaotest.dao.FlightInfoDao;
-import com.mikemunhall.hbasedaotest.model.FlightInfo;
+import com.mikemunhall.dao.FlightInfoDao;
+import com.mikemunhall.model.FlightInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

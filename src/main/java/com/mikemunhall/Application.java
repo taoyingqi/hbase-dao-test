@@ -1,4 +1,4 @@
-package com.mikemunhall.hbasedaotest;
+package com.mikemunhall;
 
 import org.springframework.boot.*;
 import org.springframework.boot.autoconfigure.*;

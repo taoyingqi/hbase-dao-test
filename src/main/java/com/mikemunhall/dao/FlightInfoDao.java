@@ -1,6 +1,6 @@
-package com.mikemunhall.hbasedaotest.dao;
+package com.mikemunhall.dao;
 
-import com.mikemunhall.hbasedaotest.model.FlightInfo;
+import com.mikemunhall.model.FlightInfo;
 import org.apache.hadoop.hbase.HColumnDescriptor;
 import org.apache.hadoop.hbase.HTableDescriptor;
 import org.apache.hadoop.hbase.TableName;
@@ -12,7 +12,6 @@ import org.springframework.data.hadoop.hbase.HbaseTemplate;
 import org.springframework.data.hadoop.hbase.RowMapper;
 import org.springframework.data.hadoop.hbase.TableCallback;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;

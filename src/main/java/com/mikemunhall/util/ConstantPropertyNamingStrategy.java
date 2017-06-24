@@ -1,4 +1,4 @@
-package com.mikemunhall.hbasedaotest.util;
+package com.mikemunhall.util;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 

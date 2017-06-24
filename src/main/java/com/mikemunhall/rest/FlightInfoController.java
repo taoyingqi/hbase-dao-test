@@ -1,7 +1,7 @@
-package com.mikemunhall.hbasedaotest.controller;
+package com.mikemunhall.rest;
 
-import com.mikemunhall.hbasedaotest.model.FlightInfo;
-import com.mikemunhall.hbasedaotest.service.FlightInfoService;
+import com.mikemunhall.model.FlightInfo;
+import com.mikemunhall.service.FlightInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

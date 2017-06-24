@@ -1,7 +1,7 @@
-package com.mikemunhall.hbasedaotest.model;
+package com.mikemunhall.model;
 
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import com.mikemunhall.hbasedaotest.util.ConstantPropertyNamingStrategy;
+import com.mikemunhall.util.ConstantPropertyNamingStrategy;
 
 @JsonNaming(ConstantPropertyNamingStrategy.class)
 public class FlightInfo {

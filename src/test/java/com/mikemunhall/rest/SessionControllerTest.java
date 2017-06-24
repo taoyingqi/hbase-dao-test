@@ -1,4 +1,4 @@
-package com.mikemunhall.hbasedaotest.controller;
+package com.mikemunhall.rest;
 
 import org.junit.Before;
 import org.junit.Test;
