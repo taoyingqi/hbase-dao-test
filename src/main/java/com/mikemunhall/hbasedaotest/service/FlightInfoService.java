@@ -32,8 +32,8 @@ public class FlightInfoService {
         return dao.findByTimePeriod(startTime, endTime);
     }
 
-    public List<FlightInfo> getSessions() {
-        return dao.findAll();
+    public List<FlightInfo> getPage() {
+        return dao.getPage();
     }
 
     public void recreateTable() throws IOException {

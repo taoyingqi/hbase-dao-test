@@ -35,9 +35,9 @@ public class FlightInfoController {
         return service.findByTimePeriod(startTime, endTime);
     }
 
-    @RequestMapping(value="/getAll", method=RequestMethod.GET)
-    public List<FlightInfo> getSessions() {
-        return service.getSessions();
+    @RequestMapping(value="", method=RequestMethod.GET)
+    public List<FlightInfo> getPage() {
+        return service.getPage();
     }
 
     @RequestMapping(value="/recreateTable", method=RequestMethod.GET)
