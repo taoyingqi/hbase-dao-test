@@ -1,7 +1,7 @@
 package com.mikemunhall.hbasedaotest.controller;
 
 import com.mikemunhall.hbasedaotest.model.FlightInfo;
-import com.mikemunhall.hbasedaotest.service.SessionDataService;
+import com.mikemunhall.hbasedaotest.service.FlightInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,11 +13,26 @@ import java.util.List;
 public class FlightInfoController {
 
     @Autowired
-    private SessionDataService service;
+    private FlightInfoService service;
 
-    @RequestMapping(value="/getOne", method=RequestMethod.GET)
-    public FlightInfo getSession(@RequestParam("sessionId") String sessionId) {
-        return service.getSession(sessionId);
+    @RequestMapping(value="/{key}", method=RequestMethod.GET)
+    public FlightInfo get(@PathVariable String key) {
+        return service.get(key);
+    }
+
+    @RequestMapping(value="/prefix/{key}", method=RequestMethod.GET)
+    public List<FlightInfo> findByKeyPrefix(@PathVariable String key) {
+        return service.findByKeyPrefix(key);
+    }
+
+    @RequestMapping(value = "/time")
+    public List<FlightInfo> findByTime(@RequestParam String time) {
+        return service.findByTime(time);
+    }
+
+    @RequestMapping(value = "/time/period")
+    public List<FlightInfo> findByTimePeriod(@RequestParam String startTime, @RequestParam String endTime) {
+        return service.findByTimePeriod(startTime, endTime);
     }
 
     @RequestMapping(value="/getAll", method=RequestMethod.GET)

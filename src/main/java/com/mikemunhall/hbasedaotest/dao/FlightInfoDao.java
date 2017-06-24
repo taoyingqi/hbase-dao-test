@@ -5,12 +5,15 @@ import org.apache.hadoop.hbase.HColumnDescriptor;
 import org.apache.hadoop.hbase.HTableDescriptor;
 import org.apache.hadoop.hbase.TableName;
 import org.apache.hadoop.hbase.client.*;
+import org.apache.hadoop.hbase.filter.*;
 import org.apache.hadoop.hbase.util.Bytes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.hadoop.hbase.HbaseTemplate;
 import org.springframework.data.hadoop.hbase.RowMapper;
 import org.springframework.data.hadoop.hbase.TableCallback;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.util.List;
@@ -65,24 +68,49 @@ public class FlightInfoDao {
         });
     }
 
+
+    public FlightInfo get(String rowName) {
+        FlightInfo flightInfo = hbaseTemplate.get(tableNameStr, rowName, columnFamily, new FlightInfoRowMapper());
+        if (flightInfo.getID() == null) {
+            flightInfo = null;
+        }
+        return flightInfo;
+    }
+
+
     public List<FlightInfo> findAll() {
         Scan scan = new Scan();
         scan.setMaxResultSize(100l); // TODO: Investigate. This setting is ignored on my local standalone installation.
 
-        return hbaseTemplate.find(tableNameStr, scan, new SessionDataRowMapper());
+        return hbaseTemplate.find(tableNameStr, scan, new FlightInfoRowMapper());
     }
 
-    public FlightInfo findOne(String rowName) {
-        FlightInfo flightInfo = hbaseTemplate.get(tableNameStr, rowName, columnFamily, new SessionDataRowMapper());
-
-        if (flightInfo.getID() == null) {
-            flightInfo = null;
-        }
-
-        return flightInfo;
+    public List<FlightInfo> findByKeyPrefix(String key) {
+        Scan scan = new Scan();
+        scan.setRowPrefixFilter(Bytes.toBytes(key));
+        scan.setMaxResultSize(100l);
+        return hbaseTemplate.find(tableNameStr, scan, new FlightInfoRowMapper());
     }
 
-    private class SessionDataRowMapper implements RowMapper<FlightInfo> {
+    public List<FlightInfo> findByTime(String time) {
+        Scan scan = new Scan();
+        Filter filter = new RowFilter(CompareFilter.CompareOp.EQUAL, new SubstringComparator(time));
+        scan.setFilter(filter);
+        return hbaseTemplate.find(tableNameStr, scan, new FlightInfoRowMapper());
+    }
+
+    public List<FlightInfo> findByTimePeriod(String startTime, String endTime) {
+        Scan scan = new Scan();
+        Filter startFilter = new RowFilter(CompareFilter.CompareOp.GREATER_OR_EQUAL
+                , new SubstringComparator(startTime));
+        Filter endFilter = new RowFilter(CompareFilter.CompareOp.LESS_OR_EQUAL
+                , new SubstringComparator(endTime));
+        FilterList filterList = new FilterList(startFilter, endFilter);
+        scan.setFilter(filterList);
+        return hbaseTemplate.find(tableNameStr, scan, new FlightInfoRowMapper());
+    }
+
+    private class FlightInfoRowMapper implements RowMapper<FlightInfo> {
         @Override
         public FlightInfo mapRow(Result result, int rowNum) throws Exception {
             FlightInfo flightInfo = new FlightInfo();
