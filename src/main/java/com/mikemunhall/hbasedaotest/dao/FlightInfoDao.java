@@ -56,7 +56,7 @@ public class FlightInfoDao {
         admin.deleteTable(tn);
     }
 
-    public void save(FlightInfo sd) {
+    public void save(final FlightInfo sd) {
         hbaseTemplate.execute(tableNameStr, new TableCallback<Object>() {
             public Object doInTable(HTableInterface table) throws Throwable {
                 Put p = new Put(Bytes.toBytes(sd.getID()));
