@@ -32,8 +32,8 @@ public class FlightInfoService {
         return dao.findByTimePeriod(startTime, endTime);
     }
 
-    public List<FlightInfo> getPage() {
-        return dao.getPage();
+    public List<FlightInfo> getPage(String key, int pageSize) {
+        return dao.getPage(key, pageSize);
     }
 
     public void recreateTable() throws IOException {

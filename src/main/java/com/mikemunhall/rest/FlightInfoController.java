@@ -36,8 +36,8 @@ public class FlightInfoController {
     }
 
     @RequestMapping(value="", method=RequestMethod.GET)
-    public List<FlightInfo> getPage() {
-        return service.getPage();
+    public List<FlightInfo> getPage(@RequestParam String key, @RequestParam int pageSize) {
+        return service.getPage(key, pageSize);
     }
 
     @RequestMapping(value="/recreateTable", method=RequestMethod.GET)

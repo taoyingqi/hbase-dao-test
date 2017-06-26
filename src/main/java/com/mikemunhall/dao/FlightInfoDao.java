@@ -77,9 +77,12 @@ public class FlightInfoDao {
     }
 
 
-    public List<FlightInfo> getPage() {
+    public List<FlightInfo> getPage(String key, int pageSize) {
         Scan scan = new Scan();
-        scan.setMaxResultSize(10); // TODO: Investigate. This setting is ignored on my local standalone installation.
+        scan.setStartRow(Bytes.toBytes(key));
+        Filter filter = new PageFilter(pageSize);
+        scan.setFilter(filter);
+        // scan.setMaxResultSize(10); // TODO: Investigate. This setting is ignored on my local standalone installation.
 
         return hbaseTemplate.find(tableNameStr, scan, new FlightInfoRowMapper());
     }
