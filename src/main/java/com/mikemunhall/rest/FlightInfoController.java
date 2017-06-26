@@ -2,6 +2,8 @@ package com.mikemunhall.rest;
 
 import com.mikemunhall.model.FlightInfo;
 import com.mikemunhall.service.FlightInfoService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,6 +13,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/flightInfo")
 public class FlightInfoController {
+    private Logger LOG = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     private FlightInfoService service;
@@ -22,7 +25,11 @@ public class FlightInfoController {
 
     @RequestMapping(value="/prefix/{key}", method=RequestMethod.GET)
     public List<FlightInfo> findByKeyPrefix(@PathVariable String key) {
-        return service.findByKeyPrefix(key);
+        long start = System.currentTimeMillis();
+        List<FlightInfo> flightInfoList = service.findByKeyPrefix(key);
+        long end = System.currentTimeMillis();
+        LOG.info("[diff={}]", end - start);
+        return flightInfoList;
     }
 
     @RequestMapping(value = "/time")

@@ -15,6 +15,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.List;
 
 @Repository
@@ -116,11 +117,17 @@ public class FlightInfoDao {
         @Override
         public FlightInfo mapRow(Result result, int rowNum) throws Exception {
             FlightInfo flightInfo = new FlightInfo();
-            flightInfo.setABSTAT(Bytes.toString(result.getValue(cf, Bytes.toBytes("ABSTAT"))));
-            flightInfo.setID(Bytes.toString(result.getValue(cf, Bytes.toBytes("ID"))));
-            flightInfo.setPFID(Bytes.toString(result.getValue(cf, Bytes.toBytes("PFID"))));
-            flightInfo.setSCHID(Bytes.toString(result.getValue(cf, Bytes.toBytes("SCHID"))));
-            flightInfo.setFLNO(Bytes.toString(result.getValue(cf, Bytes.toBytes("FLNO"))));
+            Field[] fields = flightInfo.getClass().getDeclaredFields();
+            for (Field field : fields) {
+                field.setAccessible(true);
+                field.set(flightInfo, Bytes.toString(result.getValue(cf, Bytes.toBytes(field.getName()))));
+            }
+
+//            flightInfo.setABSTAT(Bytes.toString(result.getValue(cf, Bytes.toBytes("ABSTAT"))));
+//            flightInfo.setID(Bytes.toString(result.getValue(cf, Bytes.toBytes("ID"))));
+//            flightInfo.setPFID(Bytes.toString(result.getValue(cf, Bytes.toBytes("PFID"))));
+//            flightInfo.setSCHID(Bytes.toString(result.getValue(cf, Bytes.toBytes("SCHID"))));
+//            flightInfo.setFLNO(Bytes.toString(result.getValue(cf, Bytes.toBytes("FLNO"))));
 
             return flightInfo;
         }
