@@ -111,9 +111,9 @@ public class FlightInfoDao {
         Filter endFilter = new RowFilter(CompareFilter.CompareOp.LESS_OR_EQUAL
                 , new SubstringComparator(endTime));*/
         Filter startFilter = new RowFilter(CompareFilter.CompareOp.GREATER_OR_EQUAL
-                , new RegexStringComparator(".{32}_{1}"+ startTime +"$"));
+                , new RegexStringComparator(".{32}_{1}"+ startTime +".*$"));
         Filter endFilter = new RowFilter(CompareFilter.CompareOp.LESS_OR_EQUAL
-                , new RegexStringComparator(".{32}_{1}"+ endTime +"$"));
+                , new RegexStringComparator(".{32}_{1}"+ endTime +".*$"));
         FilterList filterList = new FilterList(startFilter, endFilter);
         scan.setFilter(filterList);
         return hbaseTemplate.find(tableNameStr, scan, new FlightInfoRowMapper());
