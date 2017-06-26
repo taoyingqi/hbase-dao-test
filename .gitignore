@@ -2,6 +2,7 @@
 target/
 .idea/
 .settings/
+.svn
 upload/
 webapp/
 
