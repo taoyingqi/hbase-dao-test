@@ -34,12 +34,20 @@ public class FlightInfoController {
 
     @RequestMapping(value = "/time")
     public List<FlightInfo> findByTime(@RequestParam String time) {
-        return service.findByTime(time);
+        long start = System.currentTimeMillis();
+        List<FlightInfo> flightInfoList = service.findByTime(time);
+        long end = System.currentTimeMillis();
+        LOG.info("[diff time={}ms]", end - start);
+        return flightInfoList;
     }
 
     @RequestMapping(value = "/time/period")
     public List<FlightInfo> findByTimePeriod(@RequestParam String startTime, @RequestParam String endTime) {
-        return service.findByTimePeriod(startTime, endTime);
+        long start = System.currentTimeMillis();
+        List<FlightInfo> flightInfoList = service.findByTimePeriod(startTime, endTime);
+        long end = System.currentTimeMillis();
+        LOG.info("[diff time={}ms]", end - start);
+        return flightInfoList;
     }
 
     @RequestMapping(value="", method=RequestMethod.GET)
