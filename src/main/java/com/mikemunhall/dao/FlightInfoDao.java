@@ -118,6 +118,7 @@ public class FlightInfoDao {
     public List<FlightInfo> findByKeyPrefixAndTimePeriod(String key, String startTime, String endTime) {
         Scan scan = new Scan();
         scan.setStartRow(Bytes.toBytes(key));
+        scan.setStopRow(Bytes.toBytes(key));
         Filter startFilter = new RowFilter(CompareFilter.CompareOp.GREATER_OR_EQUAL
                 , new SubstringComparator(startTime));
         Filter endFilter = new RowFilter(CompareFilter.CompareOp.LESS_OR_EQUAL
