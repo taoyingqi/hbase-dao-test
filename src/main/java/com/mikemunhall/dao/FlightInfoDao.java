@@ -109,11 +109,13 @@ public class FlightInfoDao {
         /*Filter startFilter = new RowFilter(CompareFilter.CompareOp.GREATER_OR_EQUAL
                 , new SubstringComparator(startTime));
         Filter endFilter = new RowFilter(CompareFilter.CompareOp.LESS_OR_EQUAL
-                , new SubstringComparator(endTime));
+                , new SubstringComparator(endTime));*/
+        Filter startFilter = new RowFilter(CompareFilter.CompareOp.GREATER_OR_EQUAL
+                , new RegexStringComparator(".{32}_{1}"+ startTime +"$"));
+        Filter endFilter = new RowFilter(CompareFilter.CompareOp.LESS_OR_EQUAL
+                , new RegexStringComparator(".{32}_{1}"+ endTime +"$"));
         FilterList filterList = new FilterList(startFilter, endFilter);
-        scan.setFilter(filterList);*/
-        scan.setStartRow(Bytes.toBytes(startTime));
-        scan.setStopRow(Bytes.toBytes(endTime));
+        scan.setFilter(filterList);
         return hbaseTemplate.find(tableNameStr, scan, new FlightInfoRowMapper());
     }
 
