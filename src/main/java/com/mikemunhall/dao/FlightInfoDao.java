@@ -105,7 +105,7 @@ public class FlightInfoDao {
 
     public List<FlightInfo> findByTimePeriod(String startTime, String endTime) {
         Scan scan = new Scan();
-        scan.setCaching(30000);
+        scan.setCaching(200);
         Filter startFilter = new RowFilter(CompareFilter.CompareOp.GREATER_OR_EQUAL
                 , new SubstringComparator(startTime));
         Filter endFilter = new RowFilter(CompareFilter.CompareOp.LESS_OR_EQUAL
