@@ -53,6 +53,17 @@ public class FlightInfoController {
         return flightInfoList;
     }
 
+    // rowkey 前缀查询、时间段查询
+    @GetMapping("/prefixAndTimePeriod")
+    public List<FlightInfo> findByKeyPrefixAndTimePeriod(@RequestParam String key
+            , @RequestParam String startTime, @RequestParam String endTime) {
+        long start = System.currentTimeMillis();
+        List<FlightInfo> flightInfoList = service.findByKeyPrefixAndTimePeriod(key, startTime, endTime);
+        long end = System.currentTimeMillis();
+        LOG.info("[diff time={}ms]", end - start);
+        return flightInfoList;
+    }
+
     // 分页
     @GetMapping("")
     public List<FlightInfo> getPage(@RequestParam String key, @RequestParam int pageSize) {

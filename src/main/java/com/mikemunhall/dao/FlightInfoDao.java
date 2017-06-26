@@ -113,6 +113,18 @@ public class FlightInfoDao {
         return hbaseTemplate.find(tableNameStr, scan, new FlightInfoRowMapper());
     }
 
+    public List<FlightInfo> findByKeyPrefixAndTimePeriod(String key, String startTime, String endTime) {
+        Scan scan = new Scan();
+        scan.setStartRow(Bytes.toBytes(key));
+        Filter startFilter = new RowFilter(CompareFilter.CompareOp.GREATER_OR_EQUAL
+                , new SubstringComparator(startTime));
+        Filter endFilter = new RowFilter(CompareFilter.CompareOp.LESS_OR_EQUAL
+                , new SubstringComparator(endTime));
+        FilterList filterList = new FilterList(startFilter, endFilter);
+        scan.setFilter(filterList);
+        return hbaseTemplate.find(tableNameStr, scan, new FlightInfoRowMapper());
+    }
+
     public List<FlightInfo> findByADEPS(String ADEPS) {
         Scan scan = new Scan();
         SingleColumnValueFilter filter = new SingleColumnValueFilter(cf, Bytes.toBytes("ADEPS")
