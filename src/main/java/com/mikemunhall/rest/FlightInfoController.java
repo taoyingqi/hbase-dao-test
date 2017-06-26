@@ -28,7 +28,7 @@ public class FlightInfoController {
         long start = System.currentTimeMillis();
         List<FlightInfo> flightInfoList = service.findByKeyPrefix(key);
         long end = System.currentTimeMillis();
-        LOG.info("[diff={}]", end - start);
+        LOG.info("[diff time={}ms]", end - start);
         return flightInfoList;
     }
 
