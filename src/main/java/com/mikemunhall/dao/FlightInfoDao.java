@@ -106,12 +106,14 @@ public class FlightInfoDao {
     public List<FlightInfo> findByTimePeriod(String startTime, String endTime) {
         Scan scan = new Scan();
         scan.setCaching(200);
-        Filter startFilter = new RowFilter(CompareFilter.CompareOp.GREATER_OR_EQUAL
+        /*Filter startFilter = new RowFilter(CompareFilter.CompareOp.GREATER_OR_EQUAL
                 , new SubstringComparator(startTime));
         Filter endFilter = new RowFilter(CompareFilter.CompareOp.LESS_OR_EQUAL
                 , new SubstringComparator(endTime));
         FilterList filterList = new FilterList(startFilter, endFilter);
-        scan.setFilter(filterList);
+        scan.setFilter(filterList);*/
+        scan.setStartRow(Bytes.toBytes(startTime));
+        scan.setStopRow(Bytes.toBytes(endTime));
         return hbaseTemplate.find(tableNameStr, scan, new FlightInfoRowMapper());
     }
 
