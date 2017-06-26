@@ -36,8 +36,12 @@ public class FlightInfoService {
         return dao.getPage(key, pageSize);
     }
 
-    public void recreateTable() throws IOException {
+    /*public void recreateTable() throws IOException {
         dao.drop();
         dao.init();
+    }*/
+
+    public List<FlightInfo> findByADEPS(String ADEPS) {
+        return dao.findByADEPS(ADEPS);
     }
 }

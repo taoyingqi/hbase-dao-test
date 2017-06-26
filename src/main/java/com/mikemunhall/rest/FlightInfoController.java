@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -18,12 +17,14 @@ public class FlightInfoController {
     @Autowired
     private FlightInfoService service;
 
-    @RequestMapping(value="/{key}", method=RequestMethod.GET)
+    // rowkey 查询
+    @GetMapping("/{key}")
     public FlightInfo get(@PathVariable String key) {
         return service.get(key);
     }
 
-    @RequestMapping(value="/prefix/{key}", method=RequestMethod.GET)
+    // rowkey 前缀查询
+    @GetMapping("/prefix/{key}")
     public List<FlightInfo> findByKeyPrefix(@PathVariable String key) {
         long start = System.currentTimeMillis();
         List<FlightInfo> flightInfoList = service.findByKeyPrefix(key);
@@ -32,7 +33,8 @@ public class FlightInfoController {
         return flightInfoList;
     }
 
-    @RequestMapping(value = "/time")
+    // 时间点查询
+    @GetMapping("/time")
     public List<FlightInfo> findByTime(@RequestParam String time) {
         long start = System.currentTimeMillis();
         List<FlightInfo> flightInfoList = service.findByTime(time);
@@ -41,7 +43,8 @@ public class FlightInfoController {
         return flightInfoList;
     }
 
-    @RequestMapping(value = "/time/period")
+    // 时间段查询
+    @GetMapping("/time/period")
     public List<FlightInfo> findByTimePeriod(@RequestParam String startTime, @RequestParam String endTime) {
         long start = System.currentTimeMillis();
         List<FlightInfo> flightInfoList = service.findByTimePeriod(startTime, endTime);
@@ -50,14 +53,20 @@ public class FlightInfoController {
         return flightInfoList;
     }
 
-    @RequestMapping(value="", method=RequestMethod.GET)
+    // 分页
+    @GetMapping("")
     public List<FlightInfo> getPage(@RequestParam String key, @RequestParam int pageSize) {
         return service.getPage(key, pageSize);
     }
 
-    @RequestMapping(value="/recreateTable", method=RequestMethod.GET)
-    public void recreateTable() throws IOException {
-        service.recreateTable();
+    // ADEPS 起飞机场查询
+    @GetMapping("/ADEPS")
+    public List<FlightInfo> findByADEPS(@RequestParam String ADEPS) {
+        long start = System.currentTimeMillis();
+        List<FlightInfo> flightInfoList = service.findByADEPS(ADEPS);
+        long end = System.currentTimeMillis();
+        LOG.info("[diff time={}ms]", end - start);
+        return flightInfoList;
     }
 
 }

@@ -113,6 +113,14 @@ public class FlightInfoDao {
         return hbaseTemplate.find(tableNameStr, scan, new FlightInfoRowMapper());
     }
 
+    public List<FlightInfo> findByADEPS(String ADEPS) {
+        Scan scan = new Scan();
+        SingleColumnValueFilter filter = new SingleColumnValueFilter(cf, Bytes.toBytes("ADEPS")
+                , CompareFilter.CompareOp.EQUAL, Bytes.toBytes(ADEPS));
+        scan.setFilter(filter);
+        return hbaseTemplate.find(tableNameStr, scan, new FlightInfoRowMapper());
+    }
+
     private class FlightInfoRowMapper implements RowMapper<FlightInfo> {
         @Override
         public FlightInfo mapRow(Result result, int rowNum) throws Exception {

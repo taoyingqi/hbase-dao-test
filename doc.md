@@ -2,13 +2,13 @@
 
 |  |  |
 |:----:|:----:|
-| 功能描述 | row key 查询 |
+| 功能描述 | rowkey 查询 |
 | API接口  | /api/flightInfo/{key} |
 
 
 |  |  |
 |:----:|:----:|
-| 功能描述 | row key 前缀查询 |
+| 功能描述 | rowkey 前缀查询 |
 | API接口  | /api/flightInfo/prefix/{key} |
 
 
